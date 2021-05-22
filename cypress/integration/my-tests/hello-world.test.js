@@ -23,4 +23,16 @@ describe('Basic Tests', () => {
       'Get Pro - Unlock everything.'
     );
   });
+
+  it('Course page looks good', () => {
+    cy.visit('http://codedamn.com/');
+
+    cy.get('[data-testid="menutoggle"]').click();
+
+    cy.contains('Login').click({ force: true });
+    cy.contains('Start your course').click({ force: true });
+
+    cy.url().should('include', '/learn');
+    cy.go('back');
+  });
 });
