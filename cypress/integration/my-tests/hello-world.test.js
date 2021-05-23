@@ -30,6 +30,15 @@ describe('Basic Tests', () => {
     cy.get('[data-testid="menutoggle"]').click();
 
     cy.contains('Login').click({ force: true });
+
+    cy.log('HELLO WORLD');
+
+    cy.url().then((value) => {
+      cy.log('The current real URL is:', value);
+    });
+
+    cy.log('HELLO WORLD');
+
     cy.contains('Start your course').click({ force: true });
 
     cy.url().should('include', '/learn');
