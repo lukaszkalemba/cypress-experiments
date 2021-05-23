@@ -31,7 +31,7 @@ describe('Authenticated Tests', () => {
     }).should('not.exist');
   });
 
-  it.only('New file feature works', () => {
+  it('New file feature works', () => {
     cy.visit('http://codedamn.com/playground/html');
 
     cy.contains('Trying to establish connection');
@@ -50,6 +50,38 @@ describe('Authenticated Tests', () => {
       .type(`touch testscript-${fileName}.js{enter}`);
 
     cy.contains(`testscript-${fileName}.js`).should('exist');
+  });
+
+  it.only('New file feature works', () => {
+    cy.visit('http://codedamn.com/playground/html');
+
+    cy.contains('Trying to establish connection');
+
+    cy.contains('Setting up the challange', { timeout: 5 * 1000 }).should(
+      'exist'
+    );
+    cy.contains('Trying to establish connection', {
+      timeout: 10 * 1000,
+    }).should('not.exist');
+
+    const fileName = Math.random();
+
+    cy.get('[data-testid=xterm]')
+      .type('{ctrl}{c}')
+      .type(`touch testscript-${fileName}.js{enter}`);
+
+    cy.contains(`testscript-${fileName}.js`).rightclick();
+
+    cy.contains('Rename file').click();
+
+    cy.get('[data-testid=renamefilefolder]').type(
+      `new-testscript-${fileName}.js`
+    );
+
+    cy.contains('[data-testid="renamebtn"]').click();
+
+    cy.contains(`testscript-${fileName}.js`).should('not.exist');
+    cy.contains(`new-testscript-${fileName}.js`).should('exist');
   });
 
   // //! run only this one
