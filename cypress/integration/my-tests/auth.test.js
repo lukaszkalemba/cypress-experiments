@@ -10,7 +10,36 @@ describe('Authenticated Tests', () => {
     });
   });
 
-  it('Should pass', () => {
-    cy.visit('http://codedamn.com/dashboard');
+  it.only('Should load playground correctly', () => {
+    cy.visit('http://codedamn.com/playground/html');
+
+    cy.log('Checking for sidebar');
+    cy.contains('Trying to connect').should('exist');
+
+    cy.log('Checking bottom left button');
+    cy.get('[data-testid=xterm-controls] > div').should(
+      'contain.text',
+      'Connecting'
+    );
+
+    cy.contains('Trying to establish connection');
+
+    cy.log('Playground is initializing');
+    cy.contains('Trying to establish connection', {
+      timeout: 10 * 1000,
+    }).should('not.exist');
   });
+
+  // //! run only this one
+  // it.only('Should pass', () => {
+  //   cy.visit('http://codedamn.com/dashboard');
+
+  //   cy.get('div');
+
+  //   //! waits for resumption
+  //   // cy.pause();
+
+  //   //! debugger
+  //   // cy.debug();
+  // });
 });
