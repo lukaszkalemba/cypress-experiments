@@ -1,9 +1,11 @@
 /// <reference types="cypress" />
 
 describe('Basic Tests', () => {
-  it('Every basic element exists', () => {
+  beforeEach(() => {
     cy.visit('http://codedamn.com/');
+  });
 
+  it('Every basic element exists', () => {
     cy.contains('Learn web development');
 
     cy.contains('Get Pro - Unlock everything.').should(
@@ -14,7 +16,6 @@ describe('Basic Tests', () => {
 
   it('Every basic element exists on mobile', () => {
     cy.viewport('iphone-6');
-    cy.visit('http://codedamn.com/');
 
     cy.contains('Learn web development');
 
@@ -25,8 +26,6 @@ describe('Basic Tests', () => {
   });
 
   it('Course page looks good', () => {
-    cy.visit('http://codedamn.com/');
-
     cy.get('[data-testid="menutoggle"]').click();
 
     cy.contains('Login').click({ force: true });
@@ -46,7 +45,6 @@ describe('Basic Tests', () => {
   });
 
   it('Login should display correct error', () => {
-    cy.visit('http://codedamn.com/');
     cy.viewport('macbook-16');
 
     cy.get('[href="/settings"]').click();
@@ -62,13 +60,7 @@ describe('Basic Tests', () => {
     cy.get('[data-testid=snackclose]').should('exist');
   });
 
-  // run only this one
-  it.only('Login should work fine', () => {
-    // TODO: Set this as localStorage token for authentication
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imlvc2RldiIsIl9pZCI6IjViNzM2N2JiYzdjNDU1MTA5ZTFmNzI4YyIsIm5hbWUiOiJpb3NkZXYiLCJpYXQiOjE2MjE3NTQ4NDIsImV4cCI6MTYyNDM0Njg0Mn0.UXVx8uTGF2c-NSZFdQbHsUJBUmpiM5VrgzDKx4Ch5r4';
-
-    cy.visit('http://codedamn.com/');
+  it.only('Login process should work fine', () => {
     cy.viewport('macbook-16');
 
     cy.get('[href="/settings"]').click();
